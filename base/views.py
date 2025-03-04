@@ -91,7 +91,7 @@ def userProfile(request,pk):
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
     context = {'user':user, 'room':room, 'room_messages':room_messages, 'topics':topics}
-    return render(request, 'base/room.html', context)
+    return render(request, 'base/profile.html', context)
 
 @login_required(login_url='login')
 def createRoom(request):
@@ -163,7 +163,7 @@ def deleteMessage(request, pk):
 
 
 @login_required(login_url='login')
-def createUser(request):
+def updateUser(request):
     user = request.user
     form = UserForm(instance=user)
 
@@ -177,7 +177,7 @@ def createUser(request):
 
 def topicsPage(request):
     q = request.GET.get('q') if request.GET.get('q') else ''
-    topics = topics.object.filter(name__icontains=q)
+    topics = Topic.object.filter(name__icontains=q)
     return render(request, 'base/topics.html',{'topics':topics})
 
 def activityPage(request):
